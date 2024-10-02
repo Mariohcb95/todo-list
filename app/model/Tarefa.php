@@ -1,8 +1,6 @@
 <?php
 
-
 include_once 'Database.php';
-
 class Tarefa
 {
 
@@ -78,8 +76,8 @@ class Tarefa
         $conn = $db->connect();
 
         // Preparar a consulta SQL
-        $stmt = $conn->prepare("INSERT INTO tarefa (descricao, dt_criacao) VALUES (?,?)");
-        $stmt->bind_param("ss", $this->descricao, $this->dt_criacao);
+        $stmt = $conn->prepare("INSERT INTO tarefa (descricao, dt_criacao) VALUES (?,NOW())");
+        $stmt->bind_param("ss", $this->descricao);
 
         // Executa consulta
 
@@ -142,7 +140,7 @@ class Tarefa
     }
 
 
-    function getById($id)
+    static function getById($id)
     {
         $db = Database::getInstance();
         $conn = $db->connect();
@@ -178,13 +176,13 @@ class Tarefa
         return $tarefas;
     }
 
-    function getAlterStatus($id){
+    static function alterStatus($id){
         // Obtém a conexão com o BD
         $db = Database::getInstance();
         $conn = $db->connect();
 
         // Preparar a consulta SQL
-        $stmt = $conn->prepare("UPDATE tarefa set concluido = !concluido WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE tarefa set concluido = !concluido, dt_finalizacao = NOW() WHERE id = ?");
         $stmt->bind_param("i", $id);
 
         // Executa consulta
@@ -199,3 +197,5 @@ class Tarefa
         }
     }
 }
+
+

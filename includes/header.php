@@ -8,13 +8,14 @@
 
 
     <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+    
 
 </head>
 
 <body>
-    <header>
-        <div>
-            <img src="includes\img\logo.png" alt="Logo da Aplicação" width="300px">
+    <header style="height: 100px;">
+        <div style="text-align: left;">
+            <img src="includes\img\logo.png" alt="Logo da Aplicação" width="150px" height="150px" >
             <nav>
                 <ul>
                     <li><a href="/ToDo_list">Início</a></li>
