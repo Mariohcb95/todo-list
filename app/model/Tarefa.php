@@ -44,6 +44,13 @@ class Tarefa
         }
         return null;
     }
+    function getConcluidoBool()
+    {
+        if ($this->concluido == 1){
+            return true;
+        }
+        return false;
+    }
 
     function setId($id)
     {
@@ -77,7 +84,7 @@ class Tarefa
 
         // Preparar a consulta SQL
         $stmt = $conn->prepare("INSERT INTO tarefa (descricao, dt_criacao) VALUES (?,NOW())");
-        $stmt->bind_param("ss", $this->descricao);
+        $stmt->bind_param("s", $this->descricao);
 
         // Executa consulta
 

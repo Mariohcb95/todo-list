@@ -1,7 +1,7 @@
 <?php
+session_start();
 
 include_once 'includes/header.php';
-
 
 function loadController($controllerName)
 {
@@ -24,7 +24,18 @@ $controllerName = ucfirst($route) . 'Controller';
 
 loadController($controllerName);
 
+//Controladores restritos
+$restrictedControllers = ['TarefaController', 'UsuarioController'];
 
+if (in_array($controllerName, $restrictedControllers)) {
+
+    if (!isset($_SESSION['user_id'])) {
+
+        //Redireciona para página de login
+        header('Location: ?route=login');
+        exit();
+    }
+}
 if (class_exists($controllerName)) {
 
     // Instância o controlador

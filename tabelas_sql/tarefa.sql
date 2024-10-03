@@ -8,3 +8,13 @@ create table tarefa
     concluido      boolean default false null
 )
     comment 'Contem todas as tarefas.';
+
+    create table usuario
+(
+    id    serial not null
+        primary key,
+    nome  text   null,
+    email text   null,
+    senha text   null
+);
+

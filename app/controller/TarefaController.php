@@ -11,15 +11,6 @@ class TarefaController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($action) ) {
 
             switch ($action) {
-
-                case 'create':
-                    
-                    break;
-
-                case 'update':
-
-                    break;
-
             }
 
 
