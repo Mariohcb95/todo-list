@@ -27,7 +27,7 @@ class TarefaView
                 echo "<td><input onclick='AlterarStatus({$tarefa->getId()});' type='checkbox' {$tarefa->getConcluido()}></td>";
                 echo "<td><b><input type='text' class='CmpDescricao' value='{$tarefa->getDescricao()}' readonly style='background-color: #118bee15'></b></td>";
                 echo "<td id='dt_criacao'><input readonly type='datetime-local' id='data' name='data' value='{$tarefa->getDt_criacao()}'></td>";
-                echo "<td id='acoes'><a onclick='Editar({$tarefa->getId()})'>Editar</a> <a onclick='return confirmarExclusao()'>Apagar</a></td>";
+                echo "<td id='acoes'><a onclick='Editar({$tarefa->getId()})'>Editar</a> <a onclick='ConfirmarExclusao({$tarefa->getId()})'>Apagar</a></td>";
                 echo "</tr>";
             }
         }

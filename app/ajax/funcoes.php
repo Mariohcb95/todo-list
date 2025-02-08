@@ -31,30 +31,37 @@ switch ($_POST['function']) {
 
         $response = [
             'success' => true,  // Indica que a operação foi bem-sucedida
-            'json' => json_encode('{  
-                        id:' . $resposta->getId() . ',
-                        descricao:' . $resposta->getDescricao() . ',
-                        dt_criacao:' . $resposta->getDt_criacao() . '
-                     }')
+            'id'=> $tarefa->getId(),
+            'descricao' =>  $tarefa->getDescricao(),
+            'dt_criacao' => $tarefa->getDt_criacao()
         ];
         echo json_encode($response);
         break;
     }
 
     case 'SalvarNovo': {
-        $tarefa = new Tarefa(null, $_POST['descricao'], null, null, null);
+        $obj = new Tarefa(null, $_POST['descricao'], null, null, null);
+        $id = $obj->create();
+        $tarefa = Tarefa::getById($id);
 
-        if ($tarefa->create()) {
-            $resposta = Tarefa::getById($id);
-        }
 
         $response = [
             'success' => true,  // Indica que a operação foi bem-sucedida
-            'json' => "{  
-                        id:" . $resposta->getId() . ",
-                        descricao:" . $resposta->getDescricao() . ",
-                        dt_criacao:" . $resposta->getDt_criacao() . "
-                     }"
+            'id'=> $id,
+            'descricao' =>  $tarefa->getDescricao(),
+            'dt_criacao' => $tarefa->getDt_criacao()
+        ];
+        echo json_encode($response);
+        break;
+    }
+    case 'Apagar': {
+
+        $tarefa = new Tarefa($_POST['id'], null, null, null, null);
+
+        $tarefa->delete();
+
+        $response = [
+            'success' => true  // Indica que a operação foi bem-sucedida
         ];
         echo json_encode($response);
         break;

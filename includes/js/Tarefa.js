@@ -1,12 +1,35 @@
 $(document).ready(function (){
     $("#insert").click(function() {
-            $("#Fazer").append("<tr> <td></td> <td><b><input type='text' class='descricao' style='background-color: #118bee15'></b></td> <td><input readonly type='datetime-local' id='data' name='data'></td> <td><a onclick='SalvarNovo(this)'>Salvar</a></td></tr>");
+            $("#Fazer").append("<tr class='novo'> <td><input type='checkbox'></td> <td><b><input type='text' class='novo' style='background-color: #118bee15'></b></td> <td><input readonly type='datetime-local' id='data' name='data'></td> <td></td></tr>");
+            $(".novo").focus();
     });
     $("#Fazer").on('blur', 'input', function (){
         if ($(this).attr("readonly") === undefined){
-            var tr = $(this).closest('tr');
-            var id = tr.attr("id");
-            SalvarAlteracoes(id);
+            
+            if ($(this).attr("class") == 'novo'){
+                if ($(this).val() != ''){
+                    SalvarNovo(this);
+                } 
+                else {
+                    var tr = $(this).closest('tr');
+                    tr.remove();
+                    
+                }
+
+            } 
+            else{
+                var tr = $(this).closest('tr');
+                var id = tr.attr("id");
+                if ($(this).val() != ''){
+                    SalvarAlteracoes(id);
+                } 
+                else {
+                    $(this).focus();
+                    $(this).attr("placeholder", "Campo obrigatório!");
+                }
+                
+
+            }
         }
     });
 });
@@ -97,12 +120,10 @@ function SalvarAlteracoes(Id) {
 function SalvarNovo(obj){
     
     
-    var td = obj.closest('td');
-    var tr = td.closest('tr');
-    var campo = tr.querySelector('td input');
     
-        return;
-    var valorCampo = campo.value;
+    // var campo = obj.querySelector('td input');
+    
+    var valorCampo = obj.value;
     // var  = input.value;
 
     let dados = {
@@ -116,10 +137,40 @@ function SalvarNovo(obj){
         url: 'app/ajax/funcoes.php',
         async: true,
         data: dados,
-        success: function (response) {
-            var teste = response.objeto;
-            console.log(teste.descricao);
-
+        success: function (data) {
+            // var td = obj.closest('td');
+            // var tr = td.closest('tr');
+            $(".novo").remove();
+            $('#Fazer').append("'<tr id=" + data.id + "> <td><input onclick='AlterarStatus(" + data.id + ");' type='checkbox'></td> <td><b><input type='text' class='CmpDescricao' value='" + data.descricao + "' readonly style='background-color: #118bee15'></b></td> <td class='dt_criacao'><input readonly type='datetime-local' id='data' name='data' value='" + data.dt_criacao + "'></td> <td id='acoes'><a onclick='Editar(" + data.id + ")'>Editar</a> <a onclick='ConfirmarExclusao(" + data.id + ");'>Apagar</a></td> </tr>';");
+        },
+        error: function (xhr, status, error) {
+            console.error("Erro na requisição AJAX:", error);
         }
     });
+}
+
+function ConfirmarExclusao(id){
+    //Excluindo tarefa
+    if (confirm("Tem certeza que deseja apagar essa Tarefa?")){
+        var dados = {
+            function: "Apagar",
+            id: id
+
+        }
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: 'app/ajax/funcoes.php',
+            async: true,
+            data: dados,
+            success: function (data) {
+                alert("Tarefa apagada com sucesso!");
+                $("#" + id).remove();
+            },
+            error: function (xhr, status, error) {
+                console.error("Erro na requisição AJAX:", error);
+            }
+        });
+    }
+
 }

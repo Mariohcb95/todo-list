@@ -89,9 +89,10 @@ class Tarefa
         // Executa consulta
 
         if ($stmt->execute()) {
+            $id = $stmt->insert_id;
             $stmt->close();
             $db->closeConnection();
-            return true;
+            return $id;
         } else {
             $stmt->close();
             $db->closeConnection();

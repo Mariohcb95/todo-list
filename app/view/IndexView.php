@@ -8,7 +8,7 @@ class IndexView{
 
     public function showHomePage(){
 
-        echo "<h3> Página Inicial da Agenda App</h3>";
+        echo "<h2> Inicio APP ToDo </h2>";
 
     }
 

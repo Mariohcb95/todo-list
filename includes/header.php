@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App ToDo</title>
+    <title>App ToDo List</title>
 
 
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     
 
 </head>
@@ -16,7 +16,7 @@
     <header style="height: 100px;">
         <div style="text-align: left;">
             <nav style="display:inline-flex;">
-                <img src="includes\img\logo.png" alt="Logo da Aplicação" width="150px" height="150px" >
+                <img src="includes\img\logo.png" alt="Logo da Aplicação" width="100px" height="100px" >
                 <ul>
                     <li><a href="/ToDo_list">Início</a></li>
                     <?php
